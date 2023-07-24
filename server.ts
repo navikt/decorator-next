@@ -1,6 +1,7 @@
 import express from "express";
 import mustacheExpress from "mustache-express";
-import { Params, parseParams } from "./params";
+import { Context, Params, parseParams } from "./params";
+import { capitalizeFirstLetter } from "./utils";
 
 const app = express();
 
@@ -10,7 +11,22 @@ app.set("views", `${__dirname}/views`);
 
 app.use("/public", express.static("public"));
 
+app.use((req, res, next) => {
+  const result = parseParams(req.query);
+  if (result.success) {
+    req.decorator = result.data;
+  }
+  // req.decorator = parseParams(req.query);
+  next();
+});
+
+function getContextKey(context: Context) {
+  return capitalizeFirstLetter(context);
+}
+
 const getTexts = async (params: Params): Promise<object> => {
+  const contextKey = getContextKey(params.context);
+
   interface Node {
     children: Node[];
     displayName: string;
@@ -56,8 +72,8 @@ const getTexts = async (params: Params): Promise<object> => {
   const key: { [key: string]: string } = {
     en: "en.Footer.Columns",
     se: "se.Footer.Columns",
-    nb: "no.Footer.Columns.Privatperson",
-    "": "no.Footer.Columns.Privatperson",
+    nb: `no.Footer.Columns.${contextKey}`,
+    "": `no.Footer.Columns.${contextKey}`,
   };
 
   const footerLinks = get(menu, key[params.language])?.children;
@@ -65,8 +81,9 @@ const getTexts = async (params: Params): Promise<object> => {
   const personvern = get(menu, "no.Footer.Personvern")?.children;
   const headerMenuLinks = get(
     menu,
-    "no.Header.Main menu.Privatperson"
+    "no.Header.Main menu." + capitalizeFirstLetter(params.context)
   )?.children;
+
   return {
     footerLinks,
     mainMenu: mainMenu?.map((contextLink) => {
@@ -98,6 +115,8 @@ app.use("/footer", async (req, res) => {
     res.status(400).send(params.error);
   }
 });
+
+app.use("/header", async (req, res) => {});
 
 app.use("/", async (req, res) => {
   const params = parseParams(req.query);
