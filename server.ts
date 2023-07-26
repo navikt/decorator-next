@@ -6,38 +6,11 @@ import { Context, Params, parseParams } from "./params";
 import cors from "cors";
 import { capitalizeFirstLetter } from "./utils";
 import { GetComponents } from "./components";
-
-const isProd = process.env.NODE_ENV === "production";
-
-const app = express();
-
-app.engine("mustache", mustacheExpress());
-app.set("view engine", "mustache");
-app.set("views", `${__dirname}/views`);
-
-app.use(cors());
-app.use(express.static(isProd ? "dist" : "public"));
+import { createServer as createViteServer } from 'vite'
 
 function getContextKey(context: Context) {
   return capitalizeFirstLetter(context);
 }
-
-// How should we handle if the params are invalid?
-app.use((req, res, next) => {
-  const result = parseParams(req.query);
-  if (result.success) {
-    req.decorator = result.data;
-  } else {
-    res.status(400).send(result.error);
-  }
-
-  next();
-});
-
-app.use((req, res, next) => {
-  res.components = GetComponents(res, req.decorator);
-  next();
-});
 
 export const getTexts = async (params: Params): Promise<object> => {
   interface Node {
@@ -121,6 +94,45 @@ export const getTexts = async (params: Params): Promise<object> => {
     ...texts[params.language],
   };
 };
+const isProd = process.env.NODE_ENV === "production";
+
+async function createServer() {
+
+
+const app = express();
+
+app.engine("mustache", mustacheExpress());
+app.set("view engine", "mustache");
+app.set("views", `${__dirname}/views`);
+
+ const vite = await createViteServer({
+    server: { middlewareMode: "ssr",
+
+    },
+    appType: 'custom'
+  })
+
+app.use(vite.middlewares)
+app.use(cors());
+app.use(express.static(isProd ? "dist" : "public"));
+
+// How should we handle if the params are invalid?
+app.use((req, res, next) => {
+  const result = parseParams(req.query);
+  if (result.success) {
+    req.decorator = result.data;
+  } else {
+    res.status(400).send(result.error);
+  }
+
+  next();
+});
+
+app.use((req, res, next) => {
+  res.components = GetComponents(res, req.decorator);
+  next();
+});
+
 
 app.use("/footer", async (req, res) => {
   const params = req.decorator;
@@ -157,8 +169,8 @@ app.use("/", async (req, res) => {
       ].join("");
     } else {
       return [
-        "http://localhost:5173/@vite/client",
-        `http://localhost:5173/${entryPointPath}`,
+        "/@vite/client",
+        `/${entryPointPath}`,
         "/dev-client.js",
       ]
         .map(script)
@@ -194,3 +206,6 @@ if (!isProd) {
 server.listen(3000, function () {
   console.log("Listening on http://localhost:3000");
 });
+}
+
+createServer();

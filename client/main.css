@@ -14,7 +14,7 @@ body {
   margin: 0;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background-color: red;
+  background-color: purple;
 }
 
 ul {

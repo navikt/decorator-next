@@ -1,8 +1,6 @@
 import "vite/modulepreload-polyfill";
 import "./main.css";
 
-console.log("sa");
-
 const swapHeaderAndFooter = (lang: string) => {
   const params = new URL(
     document.getElementById("decorator-env")?.getAttribute("data-src") ?? ""
@@ -90,7 +88,6 @@ menuButton?.addEventListener("click", () => {
 });
 
 menuBackground?.addEventListener("click", () => {
-  console.log("click");
   const menu = document.getElementById("menu");
 
   [menuButton, menuBackground, menu].forEach((el) => el && purgeActive(el));
