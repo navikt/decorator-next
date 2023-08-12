@@ -17,13 +17,13 @@
     "types": [
         "vite/client",
         "cypress",
-        "@testing-library/cypress",
+        "@testing-library/cypress"
     ],
     "paths": {
       "@/*": ["./*"]
     }
   },
-  "include": ["./", "./views/**/*.ts"],
+  "include": ["./", "./views/**/*.ts", "./server"],
   "exlude": ["node_modules", "dist"],
   "references": [{ "path": "./server/tsconfig.json" }]
 }

@@ -15,7 +15,8 @@
     "build": "vite build",
     "serve": "NODE_ENV=production bun --tsconfig-override server/tsconfig.json server/server.ts",
     "prepare": "husky install",
-    "benchmarking": "bun run ./benchmarking/index.ts"
+    "benchmarking": "bun run ./benchmarking/index.ts",
+    "test:rpc": "bun --watch run ./server/fetch-RPC.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,8 @@
   "dependencies": {
     "@navikt/ds-tokens": "^4.7.2",
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "qs": "^6.11.2"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",

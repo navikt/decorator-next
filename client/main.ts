@@ -14,6 +14,7 @@ import LanguageSelector, {
   addEventListeners as addLanguageSelectorEventListeners,
 } from '@/views/language-selector';
 import { SearchShowMore } from '@/views/search-show-more';
+import { api } from './rpc-client';
 
 /**
  * Conditionally set the innerHTML of an element. To avoid conditionals everywhere.
@@ -256,3 +257,17 @@ function handleLogin() {
 
 handleMenuButton();
 handleLogin();
+
+console.log('Hello');
+
+api('/api/auth/test', {
+  query: {
+    id: '123',
+  },
+}).then((res) => {
+  console.log(res);
+});
+
+// api('/hello')
+// fetchRPC('/api/auth/test', {
+// }).then((res) => {
