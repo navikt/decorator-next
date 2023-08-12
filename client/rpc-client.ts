@@ -1,7 +1,7 @@
 import {
   CustomRequestHandler,
   type AppRouter,
-  type FetchRpcRouter,
+  FetchRpcRouter,
   GetEndpoint,
   RouterPaths,
   DefaultRequest,
@@ -30,14 +30,41 @@ type MakeOptions<
     : ExtractRequestType<TRouter, TEndpointPath>;
 };
 
-export function createFetchRpcClient<TRouter extends FetchRpcRouter<any>>() {
-  return async <
+class FetchRpcClient<TRouter extends FetchRpcRouter<any>> {
+  // async fetch<
+  //     TEndpointPath extends RouterPathsWithQuery<TRouter>[number]['path'],
+  //     TOptions extends MakeOptions<TRouter, TEndpointPath>>(
+  //         endpointPath: TEndpointPath,
+  //         options: TOptions,
+  //     ):
+  //     Promise<ReturnType<
+  //         Extract<
+  //             TRouter['endpoints'][number],
+  //             {
+  //                 path: TEndpointPath;
+  //             }
+  //         >['handler']>>
+  //     ;
+  //
+  //
+  // async fetch<
+  //     TEndpointPath extends RouterPathsWithoutQuery<TRouter>[number]['path']>
+  //     (
+  //         endpointPath: TEndpointPath,
+  //     ):
+  //     Promise<ReturnType<
+  //         Extract<
+  //             TRouter['endpoints'][number],
+  //             {
+  //                 path: TEndpointPath;
+  //             }
+  //         >['handler']>>
+  //     ;
+
+  async fetch<
     TEndpointPath extends RouterPaths<TRouter>,
     TOptions extends MakeOptions<TRouter, TEndpointPath>,
-  >(
-    endpointPath: TEndpointPath,
-    options: TOptions,
-  ) => {
+  >(endpointPath: TEndpointPath, options: TOptions) {
     const urlSearchParams = new URLSearchParams(options?.query as any);
     const response = await fetch(
       'http://localhost:4000' + endpointPath + '?' + urlSearchParams.toString(),
@@ -51,7 +78,9 @@ export function createFetchRpcClient<TRouter extends FetchRpcRouter<any>>() {
         }
       >['handler']
     >;
-  };
+  }
 }
 
-export const api = createFetchRpcClient<AppRouter>();
+// Create a version where options can be undefiend
+
+export const api = new FetchRpcClient<AppRouter>();

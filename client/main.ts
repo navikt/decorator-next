@@ -260,14 +260,12 @@ handleLogin();
 
 console.log('Hello');
 
-api('/api/auth/test', {
-  query: {
-    id: '123',
-  },
-}).then((res) => {
+api.fetch('/api/auth/test').then((res) => {
   console.log(res);
 });
 
-// api('/hello')
+api.fetch('/hello').then((res) => {
+  console.log(res);
+});
 // fetchRPC('/api/auth/test', {
 // }).then((res) => {

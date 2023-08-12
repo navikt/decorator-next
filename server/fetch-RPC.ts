@@ -38,10 +38,25 @@ export class FetchRpcRouter<
     this.expressApp = exprsesApp;
   }
 
+  handleEndpoint<
+    TPath extends string,
+    TQuery extends ParsedQs,
+    THandler extends CustomRequestHandler<any, any, any, TQuery>,
+  >(path: TPath, endpoint: Omit<Endpoint<TQuery, THandler, TPath>, 'path'>) {
+    this.endpoints.push({
+      ...endpoint,
+      path,
+    });
+    return this as any as FetchRpcRouter<
+      [...TEndpoints, Endpoint<TQuery, THandler, TPath>]
+    >;
+  }
+
   route<TPath extends string>(path: TPath) {
     return {
       handle: <
-        TQuery extends ParsedQs = ParsedQs,
+        TQuery extends ParsedQs,
+        // TQuery extends ParsedQs,
         THandler extends CustomRequestHandler<
           any,
           any,
@@ -52,16 +67,11 @@ export class FetchRpcRouter<
         // Omit here to remove the path
         endpoint: Omit<Endpoint<TQuery, THandler, TPath>, 'path'>,
       ) => {
-        this.endpoints.push({
-          ...endpoint,
-          path,
-        });
-
-        return this as any as FetchRpcRouter<
-          [...TEndpoints, Endpoint<TQuery, THandler, TPath>]
-        >;
+        return this.handleEndpoint(path, endpoint);
       },
     };
+
+    // Write for where query is defined
   }
   // Use overload to preserve inference
 
@@ -97,9 +107,11 @@ const myRouter = router
     id: string;
   }>({
     method: 'get',
-    handler: (req) => {
+    handler: () => {
       // res.send('Hello World')
-      return 'hello' + req.query.id;
+      return {
+        hello: 123,
+      };
     },
   })
   .route('/hello')
@@ -115,7 +127,7 @@ const myRouter = router
 router.start(4000);
 
 export type GetEndpoint<
-  TRouter extends FetchRpcRouter,
+  TRouter extends FetchRpcRouter<any>,
   TEndpointPath extends TRouter['endpoints'][number]['path'],
 > = Extract<
   TRouter['endpoints'][number],
@@ -127,4 +139,23 @@ export type GetEndpoint<
 export type RouterPaths<TRouter extends FetchRpcRouter> =
   TRouter['endpoints'][number]['path'];
 
+export type RouterPathsWithQuery<TRouter extends FetchRpcRouter<any>> = Exclude<
+  TRouter['endpoints'][number],
+  {
+    handler: CustomRequestHandler<any, any, any, ParsedQs>;
+  }
+>;
+
+export type RouterPathsWithoutQuery<TRouter extends FetchRpcRouter<any>> =
+  Extract<
+    TRouter['endpoints'][number],
+    {
+      handler: CustomRequestHandler<any, any, any, ParsedQs>;
+    }
+  >;
+
+// Hello handler
+
 export type AppRouter = typeof myRouter;
+
+export type HelloEndpoint = GetEndpoint<AppRouter, '/hello'>;
