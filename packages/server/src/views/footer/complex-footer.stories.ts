@@ -26,18 +26,22 @@ export const Default: Story = {
           {
             content: 'Kontakt oss',
             url: '/person/kontakt-oss/nb',
+            displayLock: false,
           },
           {
             content: 'NAV i ditt fylke',
             url: '/no/nav-og-samfunn/kontakt-nav/nav-i-ditt-fylke',
+            displayLock: false,
           },
           {
             content: 'Kurs fra NAV',
             url: '/no/nav-og-samfunn/kontakt-nav/kurs-fra-nav',
+            displayLock: false,
           },
           {
             content: 'Klage, tilbakemelding, ros',
             url: '/person/kontakt-oss/tilbakemeldinger',
+            displayLock: false,
           },
         ],
       },
@@ -47,6 +51,7 @@ export const Default: Story = {
           {
             content: 'Nyheter, pressemeldinger og pressekontakt',
             url: '/samarbeidspartner/presse',
+            displayLock: false,
           },
         ],
       },
@@ -56,14 +61,17 @@ export const Default: Story = {
           {
             content: 'Statistikk, analyse og FoU',
             url: '/no/nav-og-samfunn/statistikk-analyse-og-fou',
+            displayLock: false,
           },
           {
             content: 'Lover og regler (lovdata.no)',
             url: 'https://lovdata.no/nav/',
+            displayLock: false,
           },
           {
             content: 'Om NAV',
             url: '/no/nav-og-samfunn/om-nav/om-nav',
+            displayLock: false,
           },
         ],
       },
@@ -73,10 +81,12 @@ export const Default: Story = {
           {
             content: 'English',
             url: '/en',
+            displayLock: false,
           },
           {
             content: 'Sámegiella',
             url: '/se',
+            displayLock: false,
           },
         ],
       },
@@ -85,10 +95,12 @@ export const Default: Story = {
           {
             content: 'Personvern og informasjonskapsler',
             url: '/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten',
+            displayLock: false,
           },
           {
             content: 'Tilgjengelighet',
             url: '/tilgjengelighet',
+            displayLock: false,
           },
         ],
       },

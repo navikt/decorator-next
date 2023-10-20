@@ -8,10 +8,12 @@ const links = [
   {
     content: 'Personvern og informasjonskapsler',
     url: '/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten',
+    displayLock: false,
   },
   {
     content: 'Tilgjengelighet',
     url: '/tilgjengelighet',
+    displayLock: false,
   },
 ];
 

@@ -15,12 +15,14 @@ export type Node = {
   id: string;
   isActive?: boolean;
   isMyPageMenu?: boolean;
+  displayLock?: boolean;
 };
 
 export type Link = {
   content: string;
   url: string;
-} & Pick<Node, 'path'>;
+  displayLock: boolean;
+};
 
 export type LinkGroup = {
   heading?: string;
@@ -70,6 +72,8 @@ export type Texts = {
   notifications_error: string;
   til_forsiden: string;
   how_can_we_help: string;
+  my_page: string;
+  to_my_page: string;
 };
 
 export type Driftsmelding = {

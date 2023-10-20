@@ -137,9 +137,14 @@ export default class ContentService {
   }
 }
 
-const nodeToLink: (node: Node) => Link = ({ displayName, path }) => ({
+const nodeToLink: (node: Node) => Link = ({
+  displayName,
+  path,
+  displayLock = false,
+}) => ({
   content: displayName,
   url: path ?? '#',
+  displayLock,
 });
 
 function getContextKey(context: Context) {

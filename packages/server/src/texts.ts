@@ -50,6 +50,8 @@ const nb = {
   notifications_error: 'Feil ved lasting av varsler',
   til_forsiden: 'Til forsiden',
   how_can_we_help: 'Hva kan vi hjelpe deg med?',
+  my_page: 'Min side',
+  to_my_page: 'Til Min side',
 } satisfies Texts;
 
 export type LangBaseKeys = keyof typeof nb;
@@ -66,7 +68,7 @@ export const texts: Record<Language, Texts> = {
     sok_knapp_sokefelt: 'Search nav.no',
     login: 'Log in',
     logout: 'Log out',
-    logged_in: 'Logged in',
+    logged_in: 'Signed in',
     notifications: 'Notifications',
     notifications_empty_list: 'You have no new notifications',
     notifications_empty_list_description: 'Du har ingen nye varsler',
@@ -106,6 +108,8 @@ export const texts: Record<Language, Texts> = {
     notifications_error: 'Error loading notifications',
     til_forsiden: 'To the frontpage',
     how_can_we_help: 'What can we help you with?',
+    my_page: 'My page',
+    to_my_page: 'To My page',
   },
   se: nb,
   nn: nb,
