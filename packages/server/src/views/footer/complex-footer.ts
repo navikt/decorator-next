@@ -1,10 +1,10 @@
 import { Features, LinkGroup, Texts } from 'decorator-shared/types';
-import html from 'decorator-shared/html';
+import html, { svgIcon } from 'decorator-shared/html';
 import { ScreenshareButton } from './screenshare-button';
-import { ArrowUp } from 'decorator-shared/views/icons';
 import { LenkeMedSporing } from 'decorator-shared/views/lenke-med-sporing-helpers';
 import cls from 'decorator-client/src/styles/complex-footer.module.css';
 import utilCls from 'decorator-shared/utilities.module.css';
+import ArrowUp from '@navikt/aksel-icons/svg/ArrowUp.svg';
 
 export type ComplexFooterProps = {
   texts: Pick<Texts, 'share_screen' | 'to_top'>;
@@ -19,7 +19,7 @@ export function ComplexFooter({ texts, links, features }: ComplexFooterProps) {
     <footer class="${cls.footer}" data-theme="dark">
       <div class="${cls.footerContent} ${utilCls.contentContainer}">
         <a class="${cls.link} ${cls.toTop}" href="#">
-          ${ArrowUp({ className: cls.arrowUp })} ${texts.to_top}
+          ${svgIcon(ArrowUp)} ${texts.to_top}
         </a>
 
         <ul class="${cls.footerLinks}">

@@ -1,10 +1,10 @@
+import Enter from '@navikt/aksel-icons/svg/Enter.svg';
 import cls from 'decorator-client/src/styles/header.module.css';
 import menuItemsCls from 'decorator-client/src/styles/menu-items.module.css';
 import opsMessagesCls from 'decorator-client/src/styles/ops-messages.module.css';
-import html, { Template } from 'decorator-shared/html';
+import html, { Template, svgIcon } from 'decorator-shared/html';
 import { Texts } from 'decorator-shared/types';
 import utilsCls from 'decorator-shared/utilities.module.css';
-import { LoginIcon } from 'decorator-shared/views/icons';
 import { IconButton } from '../icon-button';
 
 export type SimpleHeaderProps = {
@@ -33,7 +33,7 @@ export const SimpleHeader = ({
       <user-menu class="${menuItemsCls.menuItems}">
         ${IconButton({
           id: 'login-button',
-          Icon: LoginIcon({}),
+          Icon: svgIcon(Enter),
           text: texts.login,
         })}
       </user-menu>

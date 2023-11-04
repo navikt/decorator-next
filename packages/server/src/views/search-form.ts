@@ -1,8 +1,8 @@
-import html from 'decorator-shared/html';
-import { CloseIcon } from 'decorator-shared/views/icons';
-import { SearchIcon } from 'decorator-shared/views/icons/search';
+import XMark from '@navikt/aksel-icons/svg/XMark.svg';
 import cls from 'decorator-client/src/styles/search-form.module.css';
+import html, { svgIcon } from 'decorator-shared/html';
 import { Texts } from 'decorator-shared/types';
+import { SearchIcon } from 'decorator-shared/views/icons/search';
 
 export type SearchFormProps = {
   texts: Texts;
@@ -21,7 +21,7 @@ export const SearchForm = ({ texts }: SearchFormProps) => {
           name="search"
           id="${id}"
         />
-        <button type="button" class="${cls.clear}">${CloseIcon({})}</button>
+        <button type="button" class="${cls.clear}">${svgIcon(XMark)}</button>
       </search-input>
       <button class="${cls.submit}">${SearchIcon({})}</button>
     </div>

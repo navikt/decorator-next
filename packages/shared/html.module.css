@@ -1,0 +1,4 @@
+.svgIcon {
+  font-size: calc(4em / 3);
+  display: flex;
+}

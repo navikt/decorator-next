@@ -10,3 +10,7 @@ declare module 'decorator-client/dist/manifest.json' {
   >;
   export default value;
 }
+
+declare module '@navikt/aksel-icons/*.svg' {
+  export default string;
+}

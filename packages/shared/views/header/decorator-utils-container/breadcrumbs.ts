@@ -1,9 +1,9 @@
 import { Breadcrumb } from '../../../params';
-import html from '../../../html';
+import html, { svgIcon } from '../../../html';
 import cls from './breadcrumbs.module.css';
 import { ForwardChevron } from '../../icons';
-import { HomeIcon } from '../../icons/home';
 import { LenkeMedSporing } from 'decorator-shared/views/lenke-med-sporing-helpers';
+import House from '@navikt/aksel-icons/svg/House.svg';
 
 const analyticsEventArgs = {
   category: 'dekorator-header',
@@ -25,7 +25,7 @@ export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) =>
                   action: 'nav.no',
                 },
                 children: html`
-                  ${HomeIcon({ className: cls.svg })}
+                  ${svgIcon(House, cls.svg)}
                   <span class="${cls.span}">nav.no</span>
                 `,
                 className: cls.link,

@@ -57,7 +57,3 @@
 [data-theme='dark'] .screenshareButton:active {
   background-color: var(--a-deepblue-600);
 }
-
-.screenshareButton svg {
-  font-size: 1.25rem;
-}

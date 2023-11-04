@@ -1,7 +1,7 @@
-import html from 'decorator-shared/html';
+import Leave from '@navikt/aksel-icons/svg/Leave.svg';
+import html, { svgIcon } from 'decorator-shared/html';
 import { Context, Language } from 'decorator-shared/params';
 import { Texts } from 'decorator-shared/types';
-import { LogoutIcon } from 'decorator-shared/views/icons/logout';
 import ContentService from './content-service';
 import { cspHandler } from './csp';
 import { env } from './env/server';
@@ -164,7 +164,7 @@ const requestHandler = async (
           ? html` <p><b>${localTexts.logged_in}:</b> ${data.name}</p>
               ${IconButton({
                 id: 'logout-button',
-                Icon: LogoutIcon({}),
+                Icon: svgIcon(Leave),
                 text: localTexts.logout,
               })}`.render()
           : UserMenuDropdown({

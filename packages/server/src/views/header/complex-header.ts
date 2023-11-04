@@ -1,18 +1,15 @@
+import Enter from '@navikt/aksel-icons/svg/Enter.svg';
 import clsx from 'clsx';
 import menuCls from 'decorator-client/src/styles/complex-header-menu.module.css';
 import cls from 'decorator-client/src/styles/header.module.css';
 import menuItemsCls from 'decorator-client/src/styles/menu-items.module.css';
 import opsMessagesCls from 'decorator-client/src/styles/ops-messages.module.css';
 import { ContextLink } from 'decorator-shared/context';
-import html, { Template } from 'decorator-shared/html';
+import html, { Template, svgIcon } from 'decorator-shared/html';
 import { Context, Language } from 'decorator-shared/params';
 import { Texts } from 'decorator-shared/types';
 import utilsCls from 'decorator-shared/utilities.module.css';
-import {
-  BurgerIcon,
-  LoginIcon,
-  SearchIcon,
-} from 'decorator-shared/views/icons';
+import { BurgerIcon, SearchIcon } from 'decorator-shared/views/icons';
 import { DropdownMenu } from '../dropdown-menu';
 import { IconButton } from '../icon-button';
 import { SearchForm } from '../search-form';
@@ -75,7 +72,7 @@ export function ComplexHeader({
           <user-menu>
             ${IconButton({
               id: 'login-button',
-              Icon: LoginIcon({}),
+              Icon: svgIcon(Enter),
               text: texts.login,
             })}
           </user-menu>

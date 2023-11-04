@@ -1,10 +1,9 @@
+import PersonCircle from '@navikt/aksel-icons/svg/PersonCircle.svg';
 import cls from 'decorator-client/src/styles/user-menu-dropdown.module.css';
+import { svgIcon } from 'decorator-shared/html';
 import { LoginLevel } from 'decorator-shared/params';
 import { Texts } from 'decorator-shared/types';
-import {
-  PersonCircleIcon,
-  PersonCircleNotificationIcon,
-} from 'decorator-shared/views/icons';
+import { PersonCircleNotificationIcon } from 'decorator-shared/views/icons';
 import { DropdownMenu } from '../dropdown-menu';
 import { IconButton } from '../icon-button';
 import { Notification } from '../notifications/notifications';
@@ -30,9 +29,7 @@ export const UserMenuDropdown = ({
         ? PersonCircleNotificationIcon({
             className: cls.icon,
           })
-        : PersonCircleIcon({
-            className: cls.icon,
-          }),
+        : svgIcon(PersonCircle, cls.icon),
     }),
     dropdownClass: cls.userMenuDropdown,
     dropdownContent: UserMenu({

@@ -29,7 +29,6 @@ declare module '*/complex-footer.module.css' {
     footerContent: string;
     link: string;
     toTop: string;
-    arrowUp: string;
     footerLinks: string;
     footerLinkGroup: string;
     footerLinkHeading: string;

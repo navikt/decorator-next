@@ -24,3 +24,17 @@ plugin({
     });
   },
 });
+
+plugin({
+  name: 'svg',
+  setup(build) {
+    build.onLoad({ filter: /\.svg$/ }, async ({ path }) => {
+      return {
+        exports: {
+          default: await Bun.file(path).text(),
+        },
+        loader: 'object',
+      };
+    });
+  },
+});

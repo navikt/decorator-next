@@ -1,3 +1,6 @@
+import clsx from 'clsx';
+import cls from './html.module.css';
+
 type Props = Record<string, string | boolean | number | null | undefined>;
 
 // Conditionally add props to an element
@@ -85,6 +88,11 @@ const html = (
 });
 
 export const json = (value: any): Template => unsafeHtml(JSON.stringify(value));
+
+export const svgIcon = (icon: string, className?: string) =>
+  html`<div class="${clsx(cls.svgIcon, className)}">
+    ${{ render: () => icon }}
+  </div>`;
 
 export const unsafeHtml = (htmlString: string) => ({
   render: () => htmlString,

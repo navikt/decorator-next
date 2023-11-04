@@ -38,14 +38,6 @@
   padding-left: 0;
 }
 
-.arrowUp {
-  stroke: var(--a-text-on-inverted);
-}
-
-.toTop:focus .arrowUp {
-  stroke: var(--a-text-action);
-}
-
 .footerLinks {
   columns: 22rem 3;
   list-style: none;

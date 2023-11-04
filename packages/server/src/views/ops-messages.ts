@@ -1,6 +1,7 @@
-import html from 'decorator-shared/html';
+import ExclamationmarkTriangle from '@navikt/aksel-icons/svg/ExclamationmarkTriangleFill.svg';
+import InformationSquareFill from '@navikt/aksel-icons/svg/InformationSquareFill.svg';
 import cls from 'decorator-client/src/styles/ops-messages.module.css';
-import { WarningIcon, InfoIcon } from 'decorator-shared/views/icons';
+import html, { svgIcon } from 'decorator-shared/html';
 import { OpsMessage } from 'decorator-shared/types';
 
 export type OpsMessagesProps = {
@@ -19,7 +20,11 @@ export const OpsMessages = ({ opsMessages }: OpsMessagesProps) => html`
         href="${url}"
         class="${cls.opsMessage}"
       >
-        ${type === 'prodstatus' ? WarningIcon() : InfoIcon()}
+        ${svgIcon(
+          type === 'prodstatus'
+            ? ExclamationmarkTriangle
+            : InformationSquareFill,
+        )}
         <span>${heading}</span>
       </a>`,
   )}
