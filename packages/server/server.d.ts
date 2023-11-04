@@ -12,5 +12,11 @@ declare module 'decorator-client/dist/manifest.json' {
 }
 
 declare module '@navikt/aksel-icons/*.svg' {
-  export default string;
+  const value: string;
+  export default value;
+}
+
+declare module 'decorator-shared/*.module.css' {
+  const value: Record<string, string>;
+  export default value;
 }
