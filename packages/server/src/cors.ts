@@ -55,9 +55,7 @@ type Result = CorsError | Valid;
 
 export function handleCors(request: Request): Result {
     const host = request.headers.get('host');
-    const origin = request.headers.get('origin');
-
-    console.log(origin, host);
+    // const origin = request.headers.get('origin');
 
     const result = corsSchema.safeParse(host);
 
