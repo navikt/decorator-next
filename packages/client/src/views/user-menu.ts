@@ -30,4 +30,6 @@ class UserMenu extends HTMLElement {
     }
 }
 
-customElements.define("user-menu", UserMenu);
+if (!customElements.get("user-menu")) {
+    customElements.define("user-menu", UserMenu);
+}
