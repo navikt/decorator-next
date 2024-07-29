@@ -1,3 +1,4 @@
+import { languageSchema } from "./../../../shared/params";
 import { AvailableLanguage, Language } from "decorator-shared/params";
 import { CustomEvents } from "../events";
 import { param, updateDecoratorParams } from "../params";
@@ -5,84 +6,68 @@ import cls from "../styles/language-selector.module.css";
 import utils from "../styles/utils.module.css";
 import { defineCustomElement } from "./custom-elements";
 
+class LanguageButton extends HTMLElement {
+    #language?: Language;
+
+    // TODO: handleError
+    private handleError() {}
+
+    connectedCallback() {
+        this.#language = param("language");
+
+        const option = this?.querySelector("button");
+        if (!option) {
+            return;
+        }
+
+        const optionLanguage = this.getAttribute("data-locale") as Language;
+        if (!optionLanguage) {
+            return;
+        }
+
+        option.classList.toggle(
+            cls.selected,
+            optionLanguage === this.#language,
+        );
+
+        option.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            updateDecoratorParams({ language: optionLanguage });
+            window.postMessage({
+                source: "decorator",
+                event: "languageSelect",
+                payload: optionLanguage,
+            });
+        });
+    }
+}
+
+defineCustomElement("language-button", LanguageButton);
+
 export class LanguageSelector extends HTMLElement {
     menu!: HTMLElement;
     container!: HTMLDivElement;
     #open = false;
     options: (HTMLAnchorElement | HTMLButtonElement)[] = [];
     #language?: Language;
+    #handleInApp = false;
 
     set language(language: Language) {
-        this.options.forEach((option) => {
-            option.classList.toggle(
-                cls.selected,
-                option.getAttribute("data-locale") === language,
-            );
-        });
         this.#language = language;
     }
 
     set availableLanguages(availableLanguages: AvailableLanguage[]) {
-        const availableLanguageToLi = (language: AvailableLanguage) => {
-            const li = document.createElement("li");
-            let option: HTMLAnchorElement | HTMLButtonElement;
-
-            if (language.handleInApp) {
-                option = document.createElement("button");
-
-                option.addEventListener("click", (e) => {
-                    e.preventDefault();
-
-                    updateDecoratorParams({ language: language.locale });
-                    window.postMessage({
-                        source: "decorator",
-                        event: "languageSelect",
-                        payload: language,
-                    });
-                    this.open = false;
-                });
-                option.addEventListener("blur", this.onBlur);
-            } else {
-                option = document.createElement("a");
-                option.href = language.url;
-                option.addEventListener("blur", this.onBlur);
-            }
-            option.classList.add(cls.option);
-            option.setAttribute("data-locale", language.locale);
-            option.classList.toggle(
-                cls.selected,
-                language.locale === this.#language,
-            );
-            option.innerHTML = {
-                nb: "Norsk (bokmål)",
-                nn: "Norsk (nynorsk)",
-                en: "English",
-                se: "Sámegiel (samisk)",
-                pl: "Polski (polsk)",
-                uk: "Українська (ukrainsk)",
-                ru: "Русский (russisk)",
-            }[language.locale];
-            this.options.push(option);
-            li.appendChild(option);
-            return li;
-        };
-
-        this.options = [];
-        this.container.classList.toggle(
-            utils.hidden,
-            availableLanguages.length === 0,
-        );
-        this.menu.replaceChildren(
-            ...availableLanguages.map(availableLanguageToLi),
-        );
+        this.#handleInApp = availableLanguages[0].handleInApp;
     }
 
     connectedCallback() {
-        this.menu = document.createElement("ul");
-        this.menu.classList.add(cls.menu, utils.hidden);
+        const menu = this?.querySelector("ul");
+        if (!menu) {
+            return;
+        }
 
-        this.container = this.querySelector(`.${cls.languageSelector}`)!;
-        this.container.appendChild(this.menu);
+        this.menu = menu;
 
         const button = this.querySelector(
             `.${cls.button}`,
